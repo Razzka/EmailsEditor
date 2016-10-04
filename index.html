@@ -1,0 +1,16 @@
+<link href="/css/app.css" rel="stylesheet">
+<link href="/css/emails-editor.css" rel="stylesheet">
+
+<div class="all" ng-app="emailsApp" ng-controller="mailsCtrl as ctrl">
+    <div class="main">
+        <div class="header">Share "Board name" with others</div>
+        <emails-editor mails="mails"></emails-editor>
+    </div>
+    
+    <button ng-click="addEmails()">Add email</button>
+    <button ng-click="getEmailsCount()">Get emails count</button>
+</div>
+
+<script type="text/javascript" src="/js/lib/angular.js"></script>
+<script type="text/javascript" src="/js/emails-editor.js"></script>
+<script type="text/javascript" src="/js/mailsCtrl.js"></script>
