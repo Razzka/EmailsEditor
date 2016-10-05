@@ -3,7 +3,8 @@
 var app = angular.module('emailsApp', ['emailsEditor']);
 
 app.controller('mailsCtrl', ['$scope', function($scope) {
-    $scope.mails = [];
+    $scope.mails = ['sidorov@mail.ru'];
+    $scope.delimiters = [',', '\n'];
     
     function generateRandomString() {
         var lengthPrefix = Math.floor(Math.random() * 5 + 2);
