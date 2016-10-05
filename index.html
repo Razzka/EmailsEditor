@@ -7,13 +7,32 @@
 
 <div class="all" ng-app="emailsApp" ng-controller="mailsCtrl as ctrl">
     <div class="main">
-        <div class="header">Share "Board name" with others</div>
+        <div class="header">
+            <div class="share">
+                Share 
+            </div>
+            <div class="quote left">
+                "
+            </div>
+            <div class="boardName">
+                Board name
+            </div>
+            <div class="quote right">
+                "
+            </div>
+            <div class="withOthers">
+                with others
+            </div>
+        </div>
         <emails-editor mails="mails"></emails-editor>
     </div>
     
     <button ng-click="addEmails()">Add email</button>
     <button ng-click="getEmailsCount()">Get emails count</button>
 </div>
+
+<script src="https://use.typekit.net/ozs0xco.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
 
 <script type="text/javascript" src="js/lib/angular.js"></script>
 <script type="text/javascript" src="js/emails-editor.js"></script>
