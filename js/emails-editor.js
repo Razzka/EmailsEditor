@@ -8,6 +8,7 @@ angular.module('emailsEditor', [])
     .controller('emailsEditorCtrl', ['$scope', '$element', '$timeout', function($scope, $element, $timeout) {
         $scope.deleteMail = function(index) {
             $scope.mails.splice(index, 1);
+			$timeout(checkAreaWidth, 50);
         };
         
         $scope.parseMails = function(text) {
@@ -28,7 +29,7 @@ angular.module('emailsEditor', [])
             $scope.mailsInput = '';
         };
         
-        $scope.$watch('mailsInput', function(newValue) {
+		function checkAreaWidth() {
             var $area = angular.element($element[0].getElementsByClassName("token-input-area"));
             
             var emailsEditorTagsWidth = $element[0].getElementsByClassName("emails-editor-tags")[0].offsetWidth;
@@ -40,6 +41,10 @@ angular.module('emailsEditor', [])
             } else {
                 $area.removeClass('width-100');
             }
+        }
+		
+        $scope.$watch('mailsInput', function(newValue) {
+			checkAreaWidth();
             
             if (newValue && (newValue.indexOf(",") !== -1 || 
                              newValue.indexOf('\n') !== -1)) {
