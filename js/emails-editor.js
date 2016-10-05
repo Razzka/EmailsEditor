@@ -5,7 +5,7 @@ angular.module('emailsEditor', [])
             return re.test(email);
         };
     }])
-    .controller('emailsEditorCtrl', ['$scope', '$element', function($scope, $element) {
+    .controller('emailsEditorCtrl', ['$scope', '$element', '$timeout', function($scope, $element, $timeout) {
         $scope.deleteMail = function(index) {
             $scope.mails.splice(index, 1);
         };
@@ -55,6 +55,12 @@ angular.module('emailsEditor', [])
             $scope.parseMails($scope.mailsInput); 
             $scope.focused = false;
         };
+		
+		$scope.pasteMails = function() {
+			$timeout(function() {
+				$scope.parseMails($scope.mailsInput);
+			}, 50);
+		}
         
         $scope.areaFocused = function() {
             $scope.focused = true;
@@ -87,12 +93,12 @@ angular.module('emailsEditor', [])
                     '<div class="emails-editor-tags" ng-class="{ focused : focused }" ng-click="focusArea()">' +
                         '<div class="token-wrapper"><token ng-repeat="mail in mails track by $index" mail="mail" delete="deleteMail($index)"></token></div>' +
                         '<textarea class="token-input-area token-input-area-font" ng-model="mailsInput" rows="2" ng-trim="false" placeholder="add more people..." ' + 
-                            'focus-me="focusInput" ng-focus="areaFocused()" ng-blur="areaBlured()"></textarea>' +
+                            'focus-me="focusInput" ng-focus="areaFocused()" ng-paste="pasteMails()" ng-blur="areaBlured()"></textarea>' +
                         '<span class="hidden-span token-input-area-font">{{mailsInput}}</span>' +
                     '</div>' +
                 '</div>'
         };
-    }).directive('focusMe', function($timeout) {
+    }).directive('focusMe', function() {
         return {
             scope: { trigger: '=focusMe' },
             link: function(scope, element) {
