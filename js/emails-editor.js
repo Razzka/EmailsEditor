@@ -1,3 +1,6 @@
+(function() {
+"use strict";
+	
 angular.module('emailsEditor', [])
     .controller('tokenCtrl', ['$scope', function($scope) {
         $scope.validEmail = function(email) {
@@ -116,3 +119,4 @@ angular.module('emailsEditor', [])
             }
         };
     });
+})();
