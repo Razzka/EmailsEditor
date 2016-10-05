@@ -10,16 +10,17 @@ body {
 button {
     background-color: #6699ff;
     color: white;
-    padding: 7px 21px 8px 21px;
+    padding: 7px 21px 6px 19px;
     border: none;
     cursor: pointer;
-    margin-top: 30px;
+    margin-top: 31px;
     margin-left: 40px;
+    font-family: "myriad-pro",sans-serif;
 }
 
 button:last-child {
     margin-left: 16px;
-    padding: 7px 11px 8px 10px;
+    padding: 7px 10px 6px 11px;
 }
 
 .main {
@@ -31,5 +32,35 @@ button:last-child {
 .header {
     font-size: 20px;
     font-family: calibri;
-    margin-top: -9px;
+    margin-top: -10.5px;
+    margin-left: -1px;
+}
+
+.quote {
+	font-style: italic;
+	display: inline-block;
+}
+
+.right {
+	margin-left: -7px;
+}
+
+.left {
+    margin-left: -3px;
+}
+
+.share {
+	display: inline-block;
+	letter-spacing: -0.05em;
+}
+
+.boardName {
+	display: inline-block;
+    letter-spacing: -0.035em;
+    margin-left: -3px;
+}
+
+.withOthers {
+	display: inline-block;
+    letter-spacing: -0.0225em;
 }
