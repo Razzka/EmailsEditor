@@ -1,6 +1,3 @@
-(function() {
-"use strict";
-	
 angular.module('emailsEditor', [])
     .controller('tokenCtrl', ['$scope', function($scope) {
         $scope.validEmail = function(email) {
@@ -11,7 +8,7 @@ angular.module('emailsEditor', [])
     .controller('emailsEditorCtrl', ['$scope', '$element', '$timeout', function($scope, $element, $timeout) {
         $scope.deleteMail = function(index) {
             $scope.mails.splice(index, 1);
-			$timeout(checkAreaWidth, 50);
+            $timeout(checkAreaWidth, 50);
         };
         
         $scope.parseMails = function(text) {
@@ -21,7 +18,8 @@ angular.module('emailsEditor', [])
             
             var newTokens = text.trim();
             
-            var tokens = newTokens.split(/,|\n/);
+            var regexp = new RegExp($scope.delimiters.join('|'));
+            var tokens = newTokens.split(regexp);
             
             angular.forEach(tokens, function(token) {
                 if (!!token) {
@@ -45,12 +43,20 @@ angular.module('emailsEditor', [])
                 $area.removeClass('width-100');
             }
         }
-		
+        
         $scope.$watch('mailsInput', function(newValue) {
-			checkAreaWidth();
+            if (!newValue) {
+                return;
+            }
             
-            if (newValue && (newValue.indexOf(",") !== -1 || 
-                             newValue.indexOf('\n') !== -1)) {
+            checkAreaWidth();
+            
+            var contains = false;
+            angular.forEach($scope.delimiters, function(delimiter) {
+                contains = contains || newValue.indexOf(delimiter) !== -1;
+            });
+            
+            if (contains) {
                 $scope.parseMails(newValue);
             }
         });
@@ -61,18 +67,13 @@ angular.module('emailsEditor', [])
         
         $scope.areaBlured = function() {
             $scope.parseMails($scope.mailsInput); 
-            $scope.focused = false;
         };
-		
-		$scope.pasteMails = function() {
-			$timeout(function() {
-				$scope.parseMails($scope.mailsInput);
-			}, 50);
-		}
         
-        $scope.areaFocused = function() {
-            $scope.focused = true;
-        };
+        $scope.pasteMails = function() {
+            $timeout(function() {
+                $scope.parseMails($scope.mailsInput);
+            }, 50);
+        }
     }])
     .directive('token', function() {
         return {
@@ -84,25 +85,26 @@ angular.module('emailsEditor', [])
             restrict: 'E',
             replace: true,
             template: "<div class='token' ng-click=\"$event.stopPropagation();\" ng-class=\"{ 'token-valid': validEmail(mail) }\">" + 
-                          "<div class='token-mail-text' tooltip='{{mail}}'>{{mail}}</div>" + 
-                          "<div class='token-cross' ng-click='delete()'></div>" + 
+                          "<div class='token-mail-text tk-myriad-pro' tooltip='{{mail}}'>{{mail}}</div>" + 
+                          "<div class='token-cross' ng-click='delete()'>×</div>" + 
                       "</div>"
         };
     }).directive('emailsEditor', function() {
         return {
             controller: 'emailsEditorCtrl',
             scope: {
-                mails: '='
+                mails: '=',
+                delimiters: '='
             },
             restrict: 'E',
             replace: true,
             template: 
                 '<div class="emails-editor">' +
-                    '<div class="emails-editor-tags" ng-class="{ focused : focused }" ng-click="focusArea()">' +
+                    '<div class="emails-editor-tags" ng-click="focusArea()">' +
                         '<div class="token-wrapper"><token ng-repeat="mail in mails track by $index" mail="mail" delete="deleteMail($index)"></token></div>' +
-                        '<textarea class="token-input-area token-input-area-font" ng-model="mailsInput" rows="2" ng-trim="false" placeholder="add more people..." ' + 
-                            'focus-me="focusInput" ng-focus="areaFocused()" ng-paste="pasteMails()" ng-blur="areaBlured()"></textarea>' +
-                        '<span class="hidden-span token-input-area-font">{{mailsInput}}</span>' +
+                        '<textarea class="token-input-area token-input-area-font tk-myriad-pro" ng-model="mailsInput" rows="2" ng-trim="false" placeholder="add more people..." ' + 
+                            'focus-me="focusInput" ng-paste="pasteMails()" ng-blur="areaBlured()"></textarea>' +
+                        '<span class="hidden-span token-input-area-font tk-myriad-pro">{{mailsInput}}</span>' +
                     '</div>' +
                 '</div>'
         };
@@ -119,4 +121,3 @@ angular.module('emailsEditor', [])
             }
         };
     });
-})();
