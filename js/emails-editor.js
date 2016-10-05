@@ -29,7 +29,7 @@ angular.module('emailsEditor', [])
             $scope.mailsInput = '';
         };
         
-		function checkAreaWidth() {
+        function checkAreaWidth() {
             var $area = angular.element($element[0].getElementsByClassName("token-input-area"));
             
             var emailsEditorTagsWidth = $element[0].getElementsByClassName("emails-editor-tags")[0].offsetWidth;
